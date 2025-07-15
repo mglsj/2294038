@@ -1,5 +1,6 @@
 import { db, eq, CodeTable, ClickTable } from 'astro:db';
 import shortid from 'shortid';
+import { Log } from 'logger';
 
 type CodeData = {
     shortCode: string;
@@ -79,6 +80,8 @@ export namespace CodeUtils {
             referer,
             location
         });
+
+        Logger
 
     }
 
