@@ -1,4 +1,5 @@
-import { db, eq, CodeTable } from 'astro:db';
+import { db, eq, CodeTable, ClickTable } from 'astro:db';
+import shortid from 'shortid';
 
 type CodeData = {
     shortCode: string;
@@ -6,14 +7,22 @@ type CodeData = {
     expiry: Date;
 };
 
+type ClickData = {
+    shortCode: string;
+    timestamp: Date;
+    referer: string;
+    location: string | null;
+};
+
 export namespace CodeUtils {
+
     export async function getCode(code: string): Promise<CodeData | null> {
 
         const row = await db.select({
-            code: CodeTable.code,
+            code: CodeTable.shortCode,
             url: CodeTable.url,
             expiry: CodeTable.expiry
-        }).from(CodeTable).where(eq(CodeTable.code, code));
+        }).from(CodeTable).where(eq(CodeTable.shortCode, code));
 
         if (row.length === 0) {
             return null; // No code found
@@ -38,7 +47,6 @@ export namespace CodeUtils {
 
         if (shortCode === undefined || shortCode.trim() === '') {
             // Generate a random short code if not provided
-            const shortid = require('shortid');
             shortCode = shortid.generate();
         }
 
@@ -60,6 +68,29 @@ export namespace CodeUtils {
         }
 
         return row[0];
+    }
+
+    export async function click(shortCode: string, referer: string, location: string | null): Promise<void> {
+        const timestamp = new Date();
+
+        await db.insert(ClickTable).values({
+            shortCode,
+            timestamp,
+            referer,
+            location
+        });
+
+    }
+
+    export async function getClicks(shortCode: string): Promise<ClickData[]> {
+        const rows = await db.select({
+            shortCode: ClickTable.shortCode,
+            timestamp: ClickTable.timestamp,
+            referer: ClickTable.referer,
+            location: ClickTable.location
+        }).from(ClickTable).where(eq(ClickTable.shortCode, shortCode));
+
+        return rows;
     }
 
 }

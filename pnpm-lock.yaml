@@ -30,6 +30,9 @@ importers:
       '@biomejs/biome':
         specifier: 2.1.1
         version: 2.1.1
+      '@types/shortid':
+        specifier: ^2.2.0
+        version: 2.2.0
 
 packages:
 
@@ -627,6 +630,9 @@ packages:
 
   '@types/node@24.0.13':
     resolution: {integrity: sha512-Qm9OYVOFHFYg3wJoTSrz80hoec5Lia/dPp84do3X7dZvLikQvM1YpmvTBEdIr/e+U8HTkFjLHLnl78K/qjf+jQ==}
+
+  '@types/shortid@2.2.0':
+    resolution: {integrity: sha512-jBG2FgBxcaSf0h662YloTGA32M8UtNbnTPekUr/eCmWXq0JWQXgNEQ/P5Gf05Cv66QZtE1Ttr83I1AJBPdzCBg==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -2382,6 +2388,8 @@ snapshots:
   '@types/node@24.0.13':
     dependencies:
       undici-types: 7.8.0
+
+  '@types/shortid@2.2.0': {}
 
   '@types/unist@3.0.3': {}
 

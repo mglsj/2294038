@@ -8,8 +8,18 @@ const CodeTable = defineTable({
     }
 })
 
+const ClickTable = defineTable({
+    columns: {
+        shortCode: column.text(),
+        timestamp: column.date(),
+        referer: column.text(),
+        location: column.text({ optional: true }),
+    },
+});
+
 export default defineDb({
     tables: {
         CodeTable,
+        ClickTable,
     },
 });
